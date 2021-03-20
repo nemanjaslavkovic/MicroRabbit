@@ -112,7 +112,7 @@ namespace MicroRabbit.Infra.Bus
             catch (Exception ex)
             {
 
-            }
+            } 
         }
 
         private async Task ProcessEvent(string eventName, string message)
