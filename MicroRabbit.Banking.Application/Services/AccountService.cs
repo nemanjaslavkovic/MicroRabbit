@@ -10,7 +10,7 @@ using System.Text;
 
 namespace MicroRabbit.Banking.Application.Services
 {
-    public class AccountService : IAccountService
+    public class AccountService : IBankingService
     {
         private readonly IAccountRepository _repository;
         private readonly IEventBus _eventBus;

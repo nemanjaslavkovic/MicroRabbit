@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MicroRabbit.Banking.Application.Interfaces
 {
-    public interface IAccountService
+    public interface IBankingService
     {
         IEnumerable<Account> GetAccounts();
         void Transfer(AccountTransfer accountTransfer);
