@@ -39,7 +39,7 @@ namespace MicroRabbit.Infra.IoC
             //Events
 
             //Application Services
-            services.AddTransient<IBankingService, AccountService>();
+            services.AddTransient<IAccountService, AccountService>();
 
             //Data
             services.AddTransient<IAccountRepository, AccountRepository>();

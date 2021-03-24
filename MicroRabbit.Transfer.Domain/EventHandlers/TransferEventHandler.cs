@@ -18,7 +18,7 @@ namespace MicroRabbit.Transfer.Domain.EventHandlers
             _repository = repository;
         }
 
-        public async Task Handle(TransferCreatedEvent @event)
+        public async Task<Task> Handle(TransferCreatedEvent @event)
         {
             await _repository.AddAsync(new TransferLog
             {
@@ -27,7 +27,7 @@ namespace MicroRabbit.Transfer.Domain.EventHandlers
                 TransferAmount = @event.Amount
             });
 
-            //return Task.CompletedTask;
+            return Task.CompletedTask;
         }
     }
 }

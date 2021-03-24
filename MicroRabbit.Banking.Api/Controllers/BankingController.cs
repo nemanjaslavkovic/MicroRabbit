@@ -13,12 +13,20 @@ namespace MicroRabbit.Banking.Api.Controllers
     [ApiController]
     [Route("api/[controller]")]
     public class BankingController : ControllerBase
-    {       
-        private readonly IBankingService _accountService;
+    {
+        private readonly IAccountService _accountService;
 
-        public BankingController(IBankingService accountService)
+        public BankingController(IAccountService accountService)
         {
             _accountService = accountService;
+        }
+
+        //GET api/banking/id
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult<IEnumerable<Account>> GetAccountById(int id)
+        {
+            return Ok(_accountService.GetAccountById(id));
         }
 
         //GET api/banking

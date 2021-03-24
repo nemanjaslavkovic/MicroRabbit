@@ -4,6 +4,7 @@ using MicroRabbit.Banking.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace MicroRabbit.Banking.Data.Repository
 {
@@ -14,6 +15,11 @@ namespace MicroRabbit.Banking.Data.Repository
         public AccountRepository(BankingDbContext ctx)
         {
             _ctx = ctx;
+        }
+
+        public Account GetAccountById(int accountId)
+        {
+            return _ctx.Accounts.SingleOrDefault(a => a.Id == accountId);
         }
 
         public IEnumerable<Account> GetAccounts()
