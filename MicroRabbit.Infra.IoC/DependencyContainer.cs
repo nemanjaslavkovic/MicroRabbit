@@ -7,6 +7,9 @@ using MicroRabbit.Banking.Domain.CommandHandlers;
 using MicroRabbit.Banking.Domain.Commands;
 using MicroRabbit.Banking.Domain.Events;
 using MicroRabbit.Banking.Domain.Interfaces;
+using MicroRabbit.Banking.Domain.Models;
+using MicroRabbit.Banking.Domain.Queries;
+using MicroRabbit.Banking.Domain.QueryHandlers;
 using MicroRabbit.Domain.Core.Bus;
 using MicroRabbit.Infra.Bus;
 using MicroRabbit.Transfer.Application.Interfaces;
@@ -19,6 +22,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static MicroRabbit.Banking.Domain.Queries.GetAllAccountsQuery;
 
 namespace MicroRabbit.Infra.IoC
 {
@@ -27,23 +31,26 @@ namespace MicroRabbit.Infra.IoC
         public static void RegisterBankingServices(IServiceCollection services)
         {
             //Domain Bus
-            services.AddSingleton<IEventBus, RabbitMQBus>(sp => 
+            services.AddScoped<IEventBus, RabbitMQBus>(sp => 
             {
                 var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
                 return new RabbitMQBus(sp.GetService<IMediator>(), scopeFactory);
             });
 
             //Domain banking Commands
-            services.AddTransient<IRequestHandler<CreateTransferCommand, bool>, TransferCommandHandler>();
+            services.AddScoped<IRequestHandler<CreateTransferCommand, bool>, TransferCommandHandler>();
+            services.AddScoped<IRequestHandler<GetAccountQuery, Account>, GetAccountQueryHandler>();
+            services.AddScoped<IRequestHandler<GetAllAccountsQuery, IEnumerable<Account>>, GetAllAccountsQueryHandler>();
+
 
             //Events
 
             //Application Services
-            services.AddTransient<IAccountService, AccountService>();
+            services.AddScoped<IAccountService, AccountService>();
 
             //Data
-            services.AddTransient<IAccountRepository, AccountRepository>();
-            services.AddTransient<BankingDbContext>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<BankingDbContext>();
         }
 
         public static void RegisterTransferServices(IServiceCollection services)

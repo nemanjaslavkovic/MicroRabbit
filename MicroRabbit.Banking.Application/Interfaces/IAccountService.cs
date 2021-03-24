@@ -3,13 +3,14 @@ using MicroRabbit.Banking.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MicroRabbit.Banking.Application.Interfaces
 {
     public interface IAccountService
     {
-        IEnumerable<Account> GetAccounts();
-        Account GetAccountById(int accountId);
-        void Transfer(AccountTransfer accountTransfer);
+        Task<IEnumerable<Account>> GetAccountsAsync();
+        Task<Account> GetAccountByIdAsync(int accountId);
+        Task Transfer(AccountTransfer accountTransfer);
     }
 }

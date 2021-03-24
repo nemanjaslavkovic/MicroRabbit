@@ -2,6 +2,7 @@
 using MicroRabbit.Domain.Core.Bus;
 using MicroRabbit.Domain.Core.Commands;
 using MicroRabbit.Domain.Core.Events;
+using MicroRabbit.Domain.Core.Queries;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -29,9 +30,14 @@ namespace MicroRabbit.Infra.Bus
             _eventTypes = new List<Type>();
         }
 
-        public Task SendCommand<T>(T command) where T : Command
+        public async Task<bool> SendCommand<T>(T command) where T : Command
         {
-            return _mediator.Send(command);
+            return await _mediator.Send(command);
+        }
+
+        public async Task<TResponse> SendQueryAsync<TResponse>(IRequest<TResponse> query)
+        {
+            return await _mediator.Send(query);
         }
 
         public void Publish<T>(T @event) where T : Event

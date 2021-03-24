@@ -24,22 +24,24 @@ namespace MicroRabbit.Banking.Api.Controllers
         //GET api/banking/id
         [HttpGet]
         [Route("{id}")]
-        public ActionResult<IEnumerable<Account>> GetAccountById(int id)
+        public async Task<IActionResult> GetAccountById(int id)
         {
-            return Ok(_accountService.GetAccountById(id));
+            var account = await _accountService.GetAccountByIdAsync(id);
+
+            return Ok(account);
         }
 
         //GET api/banking
         [HttpGet]
-        public ActionResult<IEnumerable<Account>> Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(_accountService.GetAccounts());
+            return Ok(await _accountService.GetAccountsAsync());
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody]AccountTransfer accountTransfer)
+        public async Task<IActionResult> Post([FromBody]AccountTransfer accountTransfer)
         {
-            _accountService.Transfer(accountTransfer);
+            await _accountService.Transfer(accountTransfer);
             return Ok(accountTransfer);
         }
     }

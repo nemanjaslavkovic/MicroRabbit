@@ -12,15 +12,6 @@ namespace MicroRabbit.Banking.Data.Context
         {
         }
 
-        //public BankingDbContext() : base()
-        //{
-        //}
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Server=(localdb)\\LocalSqlInstance;Database=BankingDB;Trusted_Connection=True;MultipleActiveResultSets=true;");
-        //}
-
         public DbSet<Account> Accounts { get; set; }
     }
 }
